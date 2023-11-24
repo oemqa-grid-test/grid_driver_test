@@ -1,0 +1,24 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+ 
+pool:
+  vmImage: windows-latest
+ 
+jobs:
+- deployment: VMDeploy
+  displayName: Deploy to VM
+  environment: 
+   name: GPU_VM
+   resourceName: oemqa-amrit-432
+   resourceType: virtualMachine
+  strategy:
+     runOnce:
+        deploy:   
+          steps:
+            - script: visualinfo.exe -s
+              workingDirectory: 'C:\Tempinstall\glew-2.1.0\bin\Release\x64'
